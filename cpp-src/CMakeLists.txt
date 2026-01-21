@@ -4,6 +4,17 @@ project(coreutils-cpp LANGUAGES CXX)
 
 # --- Options ---
 option(BUILD_TESTING "Build the testing tree." ON)
+option(ENABLE_COVERAGE "Enable code coverage usage" OFF)
+
+if(ENABLE_COVERAGE)
+    if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+        add_compile_options(--coverage)
+        add_link_options(--coverage)
+        message(STATUS "Code coverage enabled")
+    else()
+        message(WARNING "Code coverage not supported for this compiler")
+    endif()
+endif()
 
 # --- Standard C++ Settings ---
 set(CMAKE_CXX_STANDARD 20)
